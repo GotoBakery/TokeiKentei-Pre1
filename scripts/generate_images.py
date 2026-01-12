@@ -832,6 +832,48 @@ def plot_clustering_example():
     plt.tight_layout()
     save_plot('clustering_example.png')
 
+def plot_continuity_correction():
+    # Binomial(10, 0.5) vs Normal Approx
+    n, p = 10, 0.5
+    k = 3 # P(X <= 3)
+    
+    x = np.arange(0, n + 1)
+    prob = stats.binom.pmf(x, n, p)
+    
+    mu = n * p
+    sigma = np.sqrt(n * p * (1 - p))
+    
+    x_norm = np.linspace(-1, n + 1, 200)
+    y_norm = stats.norm.pdf(x_norm, mu, sigma)
+    
+    plt.figure(figsize=(10, 6))
+    
+    # Bar plot for Binomial
+    plt.bar(x, prob, width=1.0, edgecolor='black', alpha=0.3, label='二項分布 (離散)', color='skyblue')
+    
+    # Highlight P(X <= k) area in discrete
+    plt.bar(x[:k+1], prob[:k+1], width=1.0, edgecolor='black', alpha=0.6, color='dodgerblue', label=f'P(X <= {k})')
+    
+    # Normal Curve
+    plt.plot(x_norm, y_norm, 'r-', linewidth=2, label='正規近似 (連続)')
+    
+    # Highlight correction area
+    x_fill = np.linspace(-1, k + 0.5, 100)
+    y_fill = stats.norm.pdf(x_fill, mu, sigma)
+    plt.fill_between(x_fill, y_fill, 0, color='red', alpha=0.2, label=f'補正あり積分範囲 (x <= {k}+0.5)')
+    
+    # Annotation for +0.5
+    plt.axvline(x=k + 0.5, color='green', linestyle='--', linewidth=2)
+    plt.text(k + 0.6, 0.05, '+0.5補正\n(3.5まで積分)', color='green', fontweight='bold', ha='left')
+
+    plt.title(f'連続修正のイメージ: B({n}, {p}) を N({mu}, {sigma:.2f}) で近似', fontsize=16)
+    plt.xlabel('x')
+    plt.ylabel('確率密度 / 確率')
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    
+    save_plot('continuity_correction.png')
+
 # Run all
 if __name__ == "__main__":
     plot_bernoulli()
@@ -867,5 +909,6 @@ if __name__ == "__main__":
     # Batch 4 Functions (Ch22, Ch24)
     plot_pca_illustration()
     plot_clustering_example()
+    plot_continuity_correction()
     
     print("All images generated.")
