@@ -874,6 +874,39 @@ def plot_continuity_correction():
     
     save_plot('continuity_correction.png')
 
+def plot_fisher_information():
+    theta = np.linspace(-4, 4, 1000)
+    
+    # Sharp Likelihood (High Information)
+    # Using Normal PDF shapes as proxy for Likelihood function
+    L_sharp = stats.norm.pdf(theta, 0, 0.6)
+    
+    # Flat Likelihood (Low Information)
+    L_flat = stats.norm.pdf(theta, 0, 2.0)
+    
+    plt.figure(figsize=(12, 6))
+    
+    plt.plot(theta, L_sharp, 'b-', linewidth=2, label='情報量 大 ($J(\\theta)$ 大)\n鋭いピーク $\\to$ 推定精度が高い')
+    plt.plot(theta, L_flat, 'r--', linewidth=2, label='情報量 小 ($J(\\theta)$ 小)\n平坦なピーク $\\to$ 推定精度が低い')
+    
+    plt.title('フィッシャー情報量の直感的理解: 尤度関数の「曲率」', fontsize=16)
+    plt.xlabel('パラメータ $\\theta$')
+    plt.ylabel('尤度 $L(\\theta)$')
+    plt.legend(fontsize=12)
+    plt.grid(True, alpha=0.3)
+    plt.yticks([]) # Value itself doesn't matter much for conceptual understanding
+    
+    # Annotate
+    plt.annotate('曲がり具合(2階微分)が急\n$\\Rightarrow$ 分散の下限が小さい', 
+                 xy=(0.5, max(L_sharp)*0.8), xytext=(1.5, max(L_sharp)*0.8),
+                 arrowprops=dict(facecolor='blue', shrink=0.05), fontsize=10, color='blue')
+                 
+    plt.annotate('曲がり具合が緩やか\n$\\Rightarrow$ 分散の下限が大きい', 
+                 xy=(1.0, max(L_flat)*0.8), xytext=(2.0, max(L_flat)*1.2),
+                 arrowprops=dict(facecolor='red', shrink=0.05), fontsize=10, color='red')
+    
+    save_plot('fisher_information.png')
+
 # Run all
 if __name__ == "__main__":
     plot_bernoulli()
@@ -910,5 +943,8 @@ if __name__ == "__main__":
     plot_pca_illustration()
     plot_clustering_example()
     plot_continuity_correction()
+    
+    plot_continuity_correction()
+    plot_fisher_information()
     
     print("All images generated.")
