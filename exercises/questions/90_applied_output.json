@@ -1,0 +1,156 @@
+[
+    {
+        "id": "90-01",
+        "type": "calculation",
+        "question": "以下の重回帰分析の出力結果（summary）を見て、空欄 [ A ] に入る適切なt値を求めてください。\n\n```\nCoefficients:\n            Estimate Std. Error t value Pr(>|t|)    \n(Intercept)  10.500      2.100   5.000 1.50e-05 ***\nLength        2.400      0.800   3.000  0.00345 ** \nWeight       -1.500      0.500   [ A ]  0.00420 ** \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n```",
+        "options": [
+            "-3.000",
+            "-0.750",
+            "3.000",
+            "-1.000",
+            "-2.000"
+        ],
+        "answer": "-3.000",
+        "explanation": "t値の定義は $t = \\text{Estimate} / \\text{Std.Error}$ です。\nしたがって、$[ A ] = -1.500 / 0.500 = -3.000$ となります。\n符号（マイナス）も含めて計算することに注意してください。"
+    },
+    {
+        "id": "90-02",
+        "type": "conceptual",
+        "question": "以下の分散分析表（ANOVA Table）において、F値（F value）が 4.0 と計算されました。この値はどのような計算式で求められますか？\n\n```\nAnalysis of Variance Table\n\nResponse: Y\n          Df Sum Sq Mean Sq F value    Pr(>F)\nGroup      2  80.00   40.00    4.00  0.0301 *\nResiduals 27 270.00   10.00                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n```",
+        "options": [
+            "Group Sum Sq / Residuals Sum Sq",
+            "Group Mean Sq / Residuals Mean Sq",
+            "Residuals Mean Sq / Group Mean Sq",
+            "(Group Sum Sq - Residuals Sum Sq) / Df",
+            "Group Df * Residuals Df"
+        ],
+        "answer": "Group Mean Sq / Residuals Mean Sq",
+        "explanation": "F値は、群間平均平方（Group Mean Sq）を群内平均平方（Residuals Mean Sq）で割った値です。\n$F = 40.00 / 10.00 = 4.00$ と一致します。\nなお、Mean Sq は Sum Sq / Df で計算されます。"
+    },
+    {
+        "id": "90-03",
+        "type": "calculation",
+        "question": "以下のモデル選択の結果表を見て、AIC基準に基づいて最も適切なモデルを選択し、そのAIC値を答えてください。\n\n```\nModel Selection Table\n        df      logLik       AIC       BIC\nModel1   3   -102.500   211.000   215.300\nModel2   4   -100.000   208.000   214.500\nModel3   5    -99.500   209.000   217.100\n```",
+        "options": [
+            "Model1 (211.000)",
+            "Model2 (208.000)",
+            "Model3 (209.000)",
+            "Model1 (215.300)",
+            "Model2 (214.500)"
+        ],
+        "answer": "Model2 (208.000)",
+        "explanation": "AIC（赤池情報量基準）は値が**小さい**ほど良いモデルとされます。\n表のAIC列を比較すると、Model1: 211.0, Model2: 208.0, Model3: 209.0 なので、最小値である 208.0 の Model2 が選択されます。"
+    },
+    {
+        "id": "90-04",
+        "type": "calculation",
+        "question": "ある病気の有無（0/1）を目的変数としたロジスティック回帰分析の結果です。変数 `Smoking`（喫煙有無 1/0）の係数（Estimate）に着目したとき、喫煙によるオッズ比（Odds Ratio）は約いくらですか？\n\n```\nCoefficients:\n            Estimate Std. Error z value Pr(>|z|)\n(Intercept)  -2.500      0.500  -5.000  <2e-16\nAge           0.050      0.010   5.000  <2e-16\nSmoking       0.693      0.300   2.310   0.021\n```\n（ヒント: $\\ln(2) \\approx 0.693$）",
+        "options": [
+            "約 0.693",
+            "約 1.41",
+            "約 2.00",
+            "約 0.50",
+            "約 4.00"
+        ],
+        "answer": "約 2.00",
+        "explanation": "ロジスティック回帰において、係数 $\\beta$ の指数変換 $\\exp(\\beta)$ がオッズ比となります。\n$\\text{Estimate} = 0.693$ なので、オッズ比は $e^{0.693} \\approx 2.0$ です。\nつまり、喫煙者は非喫煙者に比べて約2倍病気になりやすい（オッズが高い）ことを意味しています。"
+    },
+    {
+        "id": "90-05",
+        "type": "conceptual",
+        "question": "以下の重回帰分析の出力において、決定係数（Multiple R-squared）と自由度調整済み決定係数（Adjusted R-squared）の関係として、一般的に正しいと言えることは何ですか？\n\n```\nResidual standard error: 2.5 on 97 degrees of freedom\nMultiple R-squared:  0.8500,\tAdjusted R-squared:  0.8450 \nF-statistic: 274.8 on 2 and 97 DF,  p-value: < 2.2e-16\n```",
+        "options": [
+            "調整済み決定係数は、常に通常の決定係数より大きい",
+            "調整済み決定係数は、常に通常の決定係数以下である",
+            "両者は常に等しい",
+            "サンプル数が少なくなると調整済み決定係数の方が大きくなる",
+            "説明変数を増やすと、調整済み決定係数は必ず減少する"
+        ],
+        "answer": "調整済み決定係数は、常に通常の決定係数以下である",
+        "explanation": "調整済み決定係数は、サンプル数と説明変数の数（自由度）を考慮してペナルティを課すため、通常の決定係数（Multiple R-squared）よりも値が小さく（あるいは等しく）なります。\n説明変数が増えても当てはまりの改善が小さい場合、調整済み決定係数は減少することがあるのが特徴です。"
+    },
+    {
+        "id": "90-06",
+        "type": "calculation",
+        "question": "以下のGLM（ポアソン回帰）の出力において、帰無仮説「全係数が0（切片のみモデル）」に対する逸脱度（Deviance）の検定を行うための情報はどれですか？\n\n```\n(Dispersion parameter for poisson family taken to be 1)\n\n    Null deviance: 150.00  on 99  degrees of freedom\nResidual deviance:  80.00  on 97  degrees of freedom\nAIC: 250.00\n```",
+        "options": [
+            "AICの値 250.00 を用いる",
+            "Null deviance (150.00) と Residual deviance (80.00) の差を用いる",
+            "Residual deviance (80.00) そのものを用いる",
+            "Dispersion parameter (1) を用いる",
+            "自由度の差 (99 - 97 = 2) のみを用いる"
+        ],
+        "answer": "Null deviance (150.00) と Residual deviance (80.00) の差を用いる",
+        "explanation": "モデル全体の適合度検定（尤度比検定）を行う場合、帰無仮説モデルの逸脱度（Null deviance）と当てはめたモデルの逸脱度（Residual deviance）の差 $\\Delta D = 150.00 - 80.00 = 70.00$ を計算し、これを自由度の差（$99-97=2$）のカイ二乗分布と照らし合わせます。"
+    },
+    {
+        "id": "90-07",
+        "type": "conceptual",
+        "question": "ある時系列データの自己相関 (ACF) と偏自己相関 (PACF) のプロット（コレログラム）の特徴が以下のようであった場合、最も適切なARIMAモデルの次数候補はどれですか？\n\n- **ACF**: ラグが大きくなるにつれて指数的または正弦波状に減衰（特定の次数で切断されない）\n- **PACF**: ラグ2で有意な値を持ち、ラグ3以降はゼロとみなせる（切断）",
+        "options": [
+            "AR(2) モデル",
+            "MA(2) モデル",
+            "ARMA(2, 2) モデル",
+            "AR(1) モデル",
+            "MA(1) モデル"
+        ],
+        "answer": "AR(2) モデル",
+        "explanation": "AR(p) モデルの特徴は、「ACFが減衰し、PACFがラグ $p$ で切断する（$p$ 次まで有意）」ことです。\n記述は PACF がラグ2で切断しているため、AR(2) モデルが示唆されます。\n（逆に MA(q) モデルであれば、ACFが切断し PACFが減衰します）"
+    },
+    {
+        "id": "90-08",
+        "type": "calculation",
+        "question": "以下の主成分分析（PCA）の出力結果から、第2主成分まででデータの全変動の何％を説明できているといえますか？（Cumulative Proportion を読み取ってください）\n\n```\nImportance of components:\n                          PC1    PC2    PC3    PC4\nStandard deviation     1.5748 0.9949 0.5971 0.4164\nProportion of Variance 0.6201 0.2474 0.0891 0.0434\nCumulative Proportion  0.6201 0.8675 0.9566 1.0000\n```",
+        "options": [
+            "約 24.7%",
+            "約 62.0%",
+            "約 86.8%",
+            "約 95.7%",
+            "100%"
+        ],
+        "answer": "約 86.8%",
+        "explanation": "表の `Cumulative Proportion`（累積寄与率）の `PC2` の列を見ます。\n値は `0.8675` となっているので、第2主成分までで約 86.75% $ \\approx 86.8\\%$ の変動を説明できています。"
+    },
+    {
+        "id": "90-09",
+        "type": "conceptual",
+        "question": "Rでカイ二乗検定（独立性の検定）を行ったところ、以下のような警告メッセージが出力されました。この警告が出る主な原因とその対処法として適切なものはどれですか？\n\n```\n> chisq.test(table_data)\n\n\tPearson's Chi-squared test\n\ndata:  table_data\nX-squared = 8.12, df = 4, p-value = 0.087\n\nWarning message:\nIn chisq.test(table_data) : Chi-squared approximation may be incorrect\n```",
+        "options": [
+            "原因: サンプルサイズが大きすぎる。対処: サンプルを減らす。",
+            "原因: 期待度数が5未満のセルが存在する。対処: フィッシャーの正確確率検定を用いるか、カテゴリを統合する。",
+            "原因: データが正規分布に従っていない。対処: t検定を行う。",
+            "原因: p値が有意水準に近い。対処: 有意水準を変更する。",
+            "原因: 自由度が大きすぎる。対処: 変数を減らす。"
+        ],
+        "answer": "原因: 期待度数が5未満のセルが存在する。対処: フィッシャーの正確確率検定を用いるか、カテゴリを統合する。",
+        "explanation": "カイ二乗検定は近似的な手法であり、各セルの期待度数が小さい（一般に5未満が全体の20%以上など）と近似精度が悪化し、この警告が出ます。\nその場合は、正確な確率を計算する「フィッシャーの正確確率検定」を行うか、少ないカテゴリを統合して期待度数を増やすのが一般的です。"
+    },
+    {
+        "id": "90-10",
+        "type": "calculation",
+        "question": "以下の相関行列（Correlation Matrix）を見て、多重共線性（Multicollinearity）の問題が最も疑われる変数のペアはどれですか？\n\n```\n             Price   EngineSize  Horsepower  MPG\nPrice        1.00    0.85        0.80       -0.50\nEngineSize   0.85    1.00        0.95       -0.60\nHorsepower   0.80    0.95        1.00       -0.55\nMPG         -0.50   -0.60       -0.55        1.00\n```",
+        "options": [
+            "Price と MPG",
+            "EngineSize と MPG",
+            "EngineSize と Horsepower",
+            "Price と Horsepower",
+            "MPG のみ"
+        ],
+        "answer": "EngineSize と Horsepower",
+        "explanation": "相関係数の絶対値が非常に大きいペアは、強い線形関係にあり、多重共線性を引き起こす可能性があります。\n表の中で最も相関が高いのは `EngineSize` と `Horsepower` の `0.95` です。これらを同時に説明変数としてモデルに組み込むと、推定が不安定になるリスクが高いです。"
+    },
+    {
+        "id": "90-11",
+        "type": "calculation",
+        "question": "あるt検定の検出力分析（Power Analysis）を行った結果が以下の通りです。検出力（power）を 0.8 以上確保するために必要な、1群あたりの最小サンプルサイズ $n$ はいくつと読み取れますか？\n\n```\n     Two-sample t test power calculation \n\n              n = 63.76576\n          delta = 0.5\n             sd = 1\n      sig.level = 0.05\n          power = 0.8\n    alternative = two.sided\n\nNOTE: n is number in *each* group\n```",
+        "options": [
+            "63",
+            "64",
+            "32",
+            "128",
+            "50"
+        ],
+        "answer": "64",
+        "explanation": "出力の `n = 63.76576` は、計算上の必要サンプルサイズです。\nサンプルサイズは整数でなければならず、必要な検出力（0.8）を下回らないようにするためには、通常**切り上げ**て整数にします。\nしたがって、64 が必要となります。"
+    }
+]
