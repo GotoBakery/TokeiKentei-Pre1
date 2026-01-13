@@ -67,6 +67,6 @@
             "ヒンジ損失 (Hinge Loss)"
         ],
         "answer": "二乗誤差損失 (Squared Error Loss)",
-        "explanation": "ベイズ決定理論において、二乗誤差（$L(\\theta, \\hat{\\theta}) = (\\theta - \\hat{\\theta})^2$）の期待値を最小化する推定量は事後平均（EAP）となります。<br>補足: 絶対誤差損失の場合は事後中央値、0-1損失の場合は事後モード（MAP）となります。"
+        "explanation": "ベイズ決定理論において、二乗誤差（$L(\\theta, \\hat{\\theta}) = (\\theta - \\hat{\\theta})^2$）の期待値を最小化する推定量は事後平均（EAP）となります。\n補足: 絶対誤差損失の場合は事後中央値、0-1損失の場合は事後モード（MAP）となります。"
     }
 ]

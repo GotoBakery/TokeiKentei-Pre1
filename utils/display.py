@@ -59,6 +59,11 @@ def format_math_text(text):
     if '$' in text:
         return text
         
+    # 日本語が含まれている場合は、文章全体を数式化すると表示崩れ（コードブロック化など）の原因になるため何もしない
+    # ひらがな、カタカナ、漢字の範囲
+    if re.search(r'[ぁ-んァ-ン一-龥]', text):
+        return text
+
     for trigger in latex_triggers:
         if re.search(trigger, text):
             return f"$ {text} $"

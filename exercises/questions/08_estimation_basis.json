@@ -1,0 +1,72 @@
+[
+    {
+        "id": "08-01",
+        "type": "conceptual",
+        "question": "推定量 $\\hat{\\theta}$ が「不偏推定量 (Unbiased Estimator)」であるための定義式はどれか？",
+        "options": [
+            "$E[\\hat{\\theta}] = \\theta$",
+            "$V[\\hat{\\theta}] = 0$",
+            "$\\lim_{n \\to \\infty} E[\\hat{\\theta}] = \\theta$",
+            "$P(|\\hat{\\theta} - \\theta| < \\epsilon) = 1$",
+            "$E[\\hat{\\theta}] = \\theta^2$"
+        ],
+        "answer": "$E[\\hat{\\theta}] = \\theta$",
+        "explanation": "不偏性は、推定量の期待値が真のパラメータ値と一致する性質を指します。"
+    },
+    {
+        "id": "08-02",
+        "type": "conceptual",
+        "question": "推定量 $\\hat{\\theta}$ が「一致推定量 (Consistent Estimator)」であるとは、どのような性質を持つことか？",
+        "options": [
+            "サンプルサイズ $n \\to \\infty$ で、$\\hat{\\theta}$ が真の値 $\\theta$ に確率収束する",
+            "期待値 $E[\\hat{\\theta}]$ が常に真の値 $\\theta$ に等しい",
+            "分散 $V[\\hat{\\theta}]$ が他の推定量より最小である",
+            "尤度関数を最大にする",
+            "常に真の値 $\\theta$ と一致する"
+        ],
+        "answer": "サンプルサイズ $n \\to \\infty$ で、$\\hat{\\theta}$ が真の値 $\\theta$ に確率収束する",
+        "explanation": "一致性は、サンプルサイズを無限大にしたときに推定量が真のパラメータに収束する性質（$P(|\\hat{\\theta} - \\theta| > \\epsilon) \\to 0$）です。\n選択肢2は「不偏性」の定義です。"
+    },
+    {
+        "id": "08-03",
+        "type": "conceptual",
+        "question": "クラメール・ラオの不等式は何に関する限界を示したものか？",
+        "options": [
+            "不偏推定量の分散の下限",
+            "検定の検出力の上限",
+            "信頼区間の幅の下限",
+            "最尤推定量のバイアスの上限",
+            "決定係数の上限"
+        ],
+        "answer": "不偏推定量の分散の下限",
+        "explanation": "クラメール・ラオの不等式は、$V[\\hat{\\theta}] \\ge \\frac{1}{I_n(\\theta)}$ という式で、不偏推定量の分散がフィッシャー情報量の逆数より小さくなれないことを示しています。\nこの下限を達成する推定量を有効推定量と呼びます。"
+    },
+    {
+        "id": "08-04",
+        "type": "calculation",
+        "question": "一様分布 $U(0, \\theta)$ からの標本最大値 $M = \\max(X_1, \\dots, X_n)$ を用いて $\\theta$ を推定する場合、不偏推定量とするための補正係数は？（すなわち $cM$ が不偏となるとき $c$ は？）",
+        "options": [
+            "$\\frac{n+1}{n}$",
+            "$\\frac{n}{n+1}$",
+            "$2$",
+            "$\\frac{n}{n-1}$",
+            "$1$"
+        ],
+        "answer": "$\\frac{n+1}{n}$",
+        "explanation": "最大値 $M$ の累積分布関数は $(x/\\theta)^n$、密度関数は $f_M(x) = n x^{n-1} / \\theta^n$。\n期待値 $E[M] = \\int_0^\\theta x \\cdot \\frac{n x^{n-1}}{\\theta^n} dx = \\frac{n}{\\theta^n} [\\frac{x^{n+1}}{n+1}]_0^\\theta = \\frac{n}{n+1} \\theta$。\nよって、$\\frac{n+1}{n} M$ とすれば期待値が $\\theta$ になります。"
+    },
+    {
+        "id": "08-05",
+        "type": "conceptual",
+        "question": "2つの不偏推定量 $\\hat{\\theta}_1, \\hat{\\theta}_2$ があるとき、相対効率 (Relative Efficiency) を $V[\\hat{\\theta}_2] / V[\\hat{\\theta}_1]$ で定義する。この値が 1 より大きい場合、どちらが「有効」と言えるか？",
+        "options": [
+            "$\\hat{\\theta}_1$ の方が有効",
+            "$\\hat{\\theta}_2$ の方が有効",
+            "両方とも同じくらい有効",
+            "どちらも一致推定量ではない",
+            "計算不能である"
+        ],
+        "answer": "$\\hat{\\theta}_1$ の方が有効",
+        "explanation": "分散が小さいほど推定量としての精度が高くなります。\n比が1より大きいということは $V[\\hat{\\theta}_2] > V[\\hat{\\theta}_1]$ なので、分散が小さい $\\hat{\\theta}_1$ の方が望ましい（有効な）推定量です。"
+    }
+]

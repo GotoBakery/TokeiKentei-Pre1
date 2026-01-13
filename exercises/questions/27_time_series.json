@@ -1,0 +1,72 @@
+[
+    {
+        "id": "27-01",
+        "type": "conceptual",
+        "question": "時系列データ $y_t$ が「弱定常 (Weakly Stationary)」であるための条件に含まれないものはどれか？",
+        "options": [
+            "データが正規分布に従うこと",
+            "期待値 $E[y_t]$ が時間 $t$ に依らず一定である",
+            "自己共分散 $Cov(y_t, y_{t-k})$ が時点 $t$ に依らず、ラグ $k$ のみに依存する",
+            "分散 $V[y_t]$ が有限で一定である",
+            "（上記のいずれでもない）"
+        ],
+        "answer": "データが正規分布に従うこと",
+        "explanation": "弱定常性は1次モーメント（平均）と2次モーメント（自己共分散）が時間不変であることを要求しますが、分布の形状（正規性など）は要求しません。"
+    },
+    {
+        "id": "27-02",
+        "type": "conceptual",
+        "question": "自己回帰モデル $AR(p)$ の次数 $p$ を決定する際、ラグ $k$ に対して計算し、ある次数以上で急激に0になる（カットオフする）性質を持つ統計量はどれか？",
+        "options": [
+            "偏自己相関係数 (PACF)",
+            "自己相関係数 (ACF)",
+            "ダービン・ワトソン比",
+            "AIC",
+            "決定係数"
+        ],
+        "answer": "偏自己相関係数 (PACF)",
+        "explanation": "ARプロセスの場合、PACFは次数 $p$ までは非ゼロで、それ以降は理論的に0になります。一方、ACFは指数的に減衰します。逆にMAプロセスではACFがカットオフします。"
+    },
+    {
+        "id": "27-03",
+        "type": "calculation",
+        "question": "AR(1)モデル $y_t = 0.5 y_{t-1} + \\epsilon_t$ （$\\epsilon_t$ は分散 $\\sigma^2$ のホワイトノイズ）の定常状態における分散 $V[y_t]$ はいくらか？",
+        "options": [
+            "$\\frac{4}{3} \\sigma^2$",
+            "$\\sigma^2$",
+            "$0.5 \\sigma^2$",
+            "$2 \\sigma^2$",
+            "$\\frac{1}{0.5} \\sigma^2$"
+        ],
+        "answer": "$\\frac{4}{3} \\sigma^2$",
+        "explanation": "両辺の分散をとると、$V[y_t] = 0.5^2 V[y_{t-1}] + V[\\epsilon_t]$。\n定常性より $V[y_t] = V[y_{t-1}] = \\gamma_0$ とおくと、\n$\\gamma_0 = 0.25 \\gamma_0 + \\sigma^2 \\Rightarrow 0.75 \\gamma_0 = \\sigma^2 \\Rightarrow \\gamma_0 = \\sigma^2 / 0.75 = \\frac{4}{3} \\sigma^2$。"
+    },
+    {
+        "id": "27-04",
+        "type": "conceptual",
+        "question": "時系列データの変動を、傾向変動 (Trend)、循環変動 (Cycle)、季節変動 (Seasonal)、不規則変動 (Irregular) の4成分に分解して分析するモデルを何と呼ぶか？",
+        "options": [
+            "状態空間モデル（または成分分解モデル）",
+            "ARIMAモデル",
+            "GARCHモデル",
+            "VARモデル",
+            "単位根過程"
+        ],
+        "answer": "状態空間モデル（または成分分解モデル）",
+        "explanation": "基本的な成分分解の考え方であり、これを統計的モデルとして柔軟に記述したものが状態空間モデル（ローカルレベルモデルなど）です。"
+    },
+    {
+        "id": "27-05",
+        "type": "conceptual",
+        "question": "金融時系列などで見られる「ボラティリティ（分散）が時間によって変動する」現象（ボラティリティ・クラスタリング）をモデル化するために適した手法は？",
+        "options": [
+            "ARCH / GARCH モデル",
+            "ARIMA モデル",
+            "SARIMA モデル",
+            "指数平滑法",
+            "移動平均法"
+        ],
+        "answer": "ARCH / GARCH モデル",
+        "explanation": "条件付き分散等の変動をモデル化する ARCH (AutoRegressive Conditional Heteroskedasticity) モデルや GARCH モデルが用いられます。"
+    }
+]

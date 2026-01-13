@@ -1,7 +1,8 @@
 import streamlit as st
 import time
-from utils.quiz_generator import QuizGenerator
+from utils.quiz_generator import QuizGenerator, CHAPTER_TITLES
 from utils.display import format_math_text
+from utils.data_manager import DataManager
 
 def run_quiz_mode():
     """CBT実践演習モード"""
@@ -17,22 +18,49 @@ def run_quiz_mode():
         st.warning("問題データが見つかりません。")
         return
 
-    # 全範囲オプションを追加
-    all_chapters_label = "全範囲 (All Chapters)"
-    chapter_options = [all_chapters_label] + chapters
-
-    selected_option = st.selectbox("学習する章を選んでください", chapter_options)
+    # 全範囲オプション
+    ALL_CHAPTERS_ID = "ALL"
     
+    # 選択肢の作成: ID -> 表示名のマッピング
+    # 既存の chapters は ["01", "04", ...] のようなIDリスト
+    
+    options_map = {}
+    
+    # 全範囲
+    options_map[ALL_CHAPTERS_ID] = "全範囲 (All Chapters)"
+    
+    # 各章
+    for chapter_id in chapters:
+        title = CHAPTER_TITLES.get(chapter_id, "")
+        if title:
+            label = f"第{chapter_id}章: {title}"
+        else:
+            label = f"第{chapter_id}章"
+        options_map[chapter_id] = label
+
+    # 表示用リスト（プルダウンに渡すもの）
+    # 辞書のvaluesを使用するが、順番を維持したいのでリストを作成
+    display_options = [options_map[ALL_CHAPTERS_ID]]
+    for chapter_id in chapters:
+        display_options.append(options_map[chapter_id])
+
+    selected_label = st.selectbox("学習する章を選んでください", display_options)
+    
+    # ラベルからIDを逆引き (一意であることを前提)
+    # options_mapのvalueからkeyを探す
+    selected_id = next((k for k, v in options_map.items() if v == selected_label), ALL_CHAPTERS_ID)
+
     # 選択が変更されたらリセット
-    if 'current_chapter_option' not in st.session_state or st.session_state.current_chapter_option != selected_option:
-        st.session_state.current_chapter_option = selected_option
+    if 'current_chapter_option' not in st.session_state or st.session_state.current_chapter_option != selected_id:
+        st.session_state.current_chapter_option = selected_id
         
         # 全範囲か特定章かを判定
         target_chapters = None
-        if selected_option != all_chapters_label:
-            target_chapters = [selected_option]
+        if selected_id != ALL_CHAPTERS_ID:
+            target_chapters = [selected_id]
             
         st.session_state.quiz_questions = generator.get_random_questions(count=5, chapter_ids=target_chapters)
+
         st.session_state.current_question_idx = 0
         st.session_state.score = 0
         st.session_state.quiz_state = "question"
@@ -75,13 +103,13 @@ def run_quiz_mode():
 
         with st.container(border=True):
             st.markdown(f"""
-            <div style="text-align: center; background-color: {result_color}; padding: 20px; border-radius: 8px;">
-                <h1 style="font-size: 3em; margin-bottom: 0;">{st.session_state.score} / {total_q}</h1>
-                <p>正解数</p>
-                <h2>{result_title}</h2>
-                <p>{result_msg}</p>
-                <div style="margin-top: 15px; font-size: 0.9em; color: #555;">
-                    <p>🕒 総解答時間: <b>{total_time:.1f}秒</b> （平均: {avg_time:.1f}秒/問）</p>
+            <div style="text-align: center; background-color: {result_color}; padding: 20px; border-radius: 8px; color: #333333;">
+                <h1 style="font-size: 3em; margin-bottom: 0; color: #333333;">{st.session_state.score} / {total_q}</h1>
+                <p style="color: #333333;">正解数</p>
+                <h2 style="color: #333333;">{result_title}</h2>
+                <p style="color: #333333;">{result_msg}</p>
+                <div style="margin-top: 15px; font-size: 0.9em; color: #333333;">
+                    <p style="margin: 0; color: #333333;">🕒 総解答時間: <b>{total_time:.1f}秒</b> （平均: {avg_time:.1f}秒/問）</p>
                 </div>
             </div>
             """, unsafe_allow_html=True)
