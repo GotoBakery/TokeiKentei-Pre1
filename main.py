@@ -11,7 +11,16 @@ def main():
     
     # セッションステートでのモード管理初期化
     if 'current_mode' not in st.session_state:
-        st.session_state.current_mode = "home"
+        # クエリパラメータからモードを取得、なければhome
+        query_params = st.query_params
+        initial_mode = query_params.get("mode", "home")
+        
+        # 正規のモードかチェック
+        valid_modes = ["home", "quiz", "learning"]
+        if initial_mode not in valid_modes:
+            initial_mode = "home"
+            
+        st.session_state.current_mode = initial_mode
 
     st.sidebar.title("📊 統計検定準一級対策")
     
@@ -44,6 +53,7 @@ def main():
     selected_mode = mode_map[selected_label]
     if selected_mode != st.session_state.current_mode:
         st.session_state.current_mode = selected_mode
+        st.query_params["mode"] = selected_mode
         st.rerun()
 
     # ルーティング実行

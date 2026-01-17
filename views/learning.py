@@ -1,6 +1,8 @@
 import streamlit as st
+import re
 from pathlib import Path
 from utils.display import render_links, embed_images_base64
+from streamlit_mermaid import st_mermaid
 
 def run_learning_mode(notes):
     """学習ノート閲覧モード"""
@@ -41,7 +43,19 @@ def run_learning_mode(notes):
             # シンプルなMarkdown表示
             st.markdown(f"# {selected_note_name}")
             st.markdown("---")
-            st.markdown(content, unsafe_allow_html=True)
+            
+            # Mermaid対応のための分割レンダリング
+            parts = re.split(r'```mermaid\n(.*?)\n```', content, flags=re.DOTALL)
+            
+            for i, part in enumerate(parts):
+                if i % 2 == 0:
+                    # 通常のMarkdownテキスト
+                    if part: # 空文字列でなければ表示
+                         st.markdown(part, unsafe_allow_html=True)
+                else:
+                    # Mermaidブロック
+                    # st_mermaidはデフォルトで高さが自動ではないため、必要に応じて調整
+                    st_mermaid(part, height=300)
     
     with st.sidebar:
         st.markdown("---")
